@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ==========================
+         Action for Branches
+         ========================== -->
+    <record id="action_branches" model="ir.actions.act_window">
+        <field name="name">Branches</field>
+        <field name="res_model">custom_supply.branch</field>
+        <!-- view_mode يكفي لتحديد العرض -->
+        <field name="view_mode">kanban,form</field>
+        <field name="groups_id" eval="[(4, ref('custom_supply.group_supply_manager'))]"/>
+    </record>
+
+    <!-- ==========================
+         Action for Branch Products
+         ========================== -->
+    <record id="action_branch_products" model="ir.actions.act_window">
+        <field name="name">Branch Products</field>
+        <field name="res_model">custom_supply.branch_product</field>
+        <field name="view_mode">tree,form</field>
+        <field name="groups_id" eval="[(4, ref('custom_supply.group_supply_manager'))]"/>
+    </record>
+</odoo>

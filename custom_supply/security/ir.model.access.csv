@@ -1,0 +1,27 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_branch_manager,Branch Manager Access,model_custom_supply_branch,group_supply_manager,1,1,1,1
+access_branch_employee,Branch Employee Branch Access,model_custom_supply_branch,group_branch_employee,1,0,0,0
+access_branch_product_manager,Branch Product Manager Access,model_custom_supply_branch_product,group_supply_manager,1,1,1,1
+access_branch_product_employee,Branch Employee Branch Product Access,model_custom_supply_branch_product,group_branch_employee,1,0,0,0
+access_supply_request_manager,Supply Request Manager Access,model_custom_supply_supply_request,group_supply_manager,1,1,1,1
+access_supply_request_employee,Supply Request Employee Access,model_custom_supply_supply_request,group_branch_employee,1,1,1,0
+access_supply_request_warehouse_request,Supply Request Warehouse Access,model_custom_supply_supply_request,group_warehouse_employee,1,1,0,0
+access_supply_request_high_manager,High Manager Read Access,model_custom_supply_supply_request,group_high_manager,1,1,0,0
+access_supply_request_line_manager,Supply Request Line Manager Access,model_custom_supply_supply_request_line,group_supply_manager,1,1,1,1
+access_supply_request_line_employee,Supply Request Line Employee Access,model_custom_supply_supply_request_line,group_branch_employee,1,1,1,0
+access_supply_request_line_warehouse,Supply Request Line Warehouse Employee Access,model_custom_supply_supply_request_line,group_warehouse_employee,1,1,0,0
+access_supply_request_line_high_manager,High Manager Read Access (Lines),model_custom_supply_supply_request_line,group_high_manager,1,0,0,0
+access_mail_message_branch_employee,Branch Employee: Mail Message Access,mail.model_mail_message,group_branch_employee,1,1,1,0
+access_mail_followers_branch_employee,Branch Employee: Mail Followers Access,mail.model_mail_followers,group_branch_employee,1,1,1,0
+access_mail_message_supply_manager,Supply Manager: Mail Message Access,mail.model_mail_message,group_supply_manager,1,1,1,1
+access_mail_followers_supply_manager,Supply Manager: Mail Followers Access,mail.model_mail_followers,group_supply_manager,1,1,1,1
+access_mail_message_high_manager,High Manager: Mail Message Access,mail.model_mail_message,group_high_manager,1,1,0,0
+access_mail_followers_high_manager,High Manager: Mail Followers Access,mail.model_mail_followers,group_high_manager,1,1,0,0
+access_custom_supply_unit_manager,access_custom_supply_unit_manager,model_custom_supply_unit,group_supply_manager,1,1,1,1
+access_branch_warehouse,Warehouse Employee Branch Access,model_custom_supply_branch,group_warehouse_employee,1,0,0,0
+
+access_branch_employee_actions,Branch Employee Access to Actions,base.model_ir_actions_act_window,group_branch_employee,1,0,0,0
+access_branch_employee_action_views,Branch Employee: Action Window View Access,base.model_ir_actions_act_window_view,group_branch_employee,1,0,0,0
+
+
+access_product_no_create,Disable Product Creation,product.model_product_template,base.group_user,1,0,0,0

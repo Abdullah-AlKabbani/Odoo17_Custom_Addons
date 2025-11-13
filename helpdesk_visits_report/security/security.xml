@@ -1,0 +1,15 @@
+<odoo>
+  <!-- Category to show group in Settings > Users & Companies > Groups -->
+  <record id="module_category_helpdesk_visits" model="ir.module.category">
+    <field name="name">Help Desk Visits</field>
+    <field name="sequence">30</field>
+  </record>
+
+  <!-- Only members of this group can access the backend of this module -->
+  <record id="group_helpdesk_manager" model="res.groups">
+    <field name="name">Manager</field>
+    <field name="category_id" ref="helpdesk_visits_report.module_category_helpdesk_visits"/>
+    <!-- Being a normal internal user is implied (so you can assign it to internal users) -->
+    <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+  </record>
+</odoo>

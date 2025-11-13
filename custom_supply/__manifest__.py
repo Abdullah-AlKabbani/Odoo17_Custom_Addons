@@ -1,0 +1,41 @@
+# -*- coding: utf-8 -*-
+{
+    'name': 'Custom Supply Management',
+    'version': '17.0.1.0.0',
+    'category': 'Inventory',
+    'summary': 'Manage branch supply requests and product distribution',
+    'author': 'Abdullah Al-Kabbani',
+    'website': '',
+    'license': 'LGPL-3',
+    'application': True,
+    'installable': True,
+    'depends': [
+        'base',
+        'product',
+        'mail',
+        'web',
+    ],
+    'data': [
+        'data/sequence_data.xml',
+        'security/custom_supply_groups.xml',
+        'security/ir.model.access.csv',
+        'views/menus_root.xml',
+        'views/branch_view.xml',
+        'views/branch_product_views.xml',
+        'views/supply_request_views.xml',
+        'views/supply_request_tracking_views.xml',
+        'views/product_template_views.xml',
+        'views/supply_unit_views.xml',
+        'views/product_supply_view.xml',
+        'views/branch_actions.xml',
+        'views/menus.xml',
+        'report/supply_request_report.xml',
+        'report/supply_request_report_template.xml',
+    ],
+    'assets': {
+        'web.assets_backend': [
+            'custom_supply/static/src/css/kanban_colors.css',
+        ],
+    },
+    'images': ['static/description/supply_management.png'],
+}
