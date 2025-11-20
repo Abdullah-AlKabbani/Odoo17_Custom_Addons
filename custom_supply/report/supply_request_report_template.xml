@@ -60,22 +60,28 @@
             </tbody>
           </table>
 
-          <br/><br/>
+          <br/>
 
           <!-- التوقيعات -->
           <div style="width:100%; margin-top:30px;">
             <div style="float:right; text-align:right; width:45%; font-weight:bold;">
               مشرف الفرع
               <br/>
-              <span style="font-weight:normal;">التاريخ: _____________</span><br/>
+              <span style="font-weight:normal;">التوقيع والتاريخ: _____________</span>
+                <!--
+                <br/>
               <span style="font-weight:normal;">التوقيع: _____________</span>
+               -->
             </div>
 
             <div style="float:left; text-align:right; width:45%; font-weight:bold;">
               مسؤول التوريد
               <br/>
-              <span style="font-weight:normal;">التاريخ: _____________</span><br/>
+              <span style="font-weight:normal;">التوقيع والتاريخ: _____________</span>
+                <!--
+                <br/>
               <span style="font-weight:normal;">التوقيع: _____________</span>
+              -->
             </div>
           </div>
 
@@ -84,11 +90,12 @@
 
           <br/><br/>
 
-          <!-- نسخ -->
+          <!--
           <p style="text-align:right; margin-top:40px; line-height:1.8;">
             نسخة إلى أمین المستودع<br/>
             نسخة إلى مسؤول التورید
           </p>
+          -->
 
         </main>
 

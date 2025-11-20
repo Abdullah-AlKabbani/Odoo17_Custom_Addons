@@ -1,52 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Update root to attach the action (app icon will appear) -->
-    <menuitem id="menu_custom_supply_root"
-              action="custom_supply.action_order_tracking"/>
-
-    <!-- Branches (Supply Manager & High Manager only) -->
-    <menuitem id="menu_branches"
-              name="Branches"
-              parent="menu_custom_supply_root"
-              action="custom_supply.action_branches"
-              sequence="10"
-              groups="custom_supply.group_supply_manager,custom_supply.group_high_manager"/>
-
-    <!-- Branch Products (Supply Manager & High Manager only) -->
-    <menuitem id="menu_branch_products"
-              name="Branch Products"
-              parent="menu_custom_supply_root"
-              action="custom_supply.action_branch_products"
-              sequence="20"
-              groups="custom_supply.group_supply_manager,custom_supply.group_high_manager"/>
-
-    <!-- Supply Requests per role -->
-    <menuitem id="menu_supply_requests_branch"
-              name="Supply Requests"
-              parent="menu_custom_supply_root"
-              action="custom_supply.action_supply_requests_branch"
-              sequence="40"
-              groups="custom_supply.group_branch_employee"/>
-
-    <menuitem id="menu_supply_requests_supply"
-              name="Supply Requests"
-              parent="menu_custom_supply_root"
-              action="custom_supply.action_supply_requests_supply_manager"
-              sequence="40"
-              groups="custom_supply.group_supply_manager"/>
-
-    <menuitem id="menu_supply_requests_warehouse"
-              name="Supply Requests"
-              parent="menu_custom_supply_root"
-              action="custom_supply.action_supply_requests_warehouse"
-              sequence="40"
-              groups="custom_supply.group_warehouse_employee"/>
-
-    <!-- Order Tracking -->
-    <menuitem id="menu_order_tracking"
-              name="Order Tracking"
-              parent="menu_custom_supply_root"
-              action="custom_supply.action_order_tracking"
-              sequence="30"
-              groups="custom_supply.group_branch_employee,custom_supply.group_supply_manager,custom_supply.group_warehouse_employee,custom_supply.group_high_manager"/>
+    <menuitem id="menu_custom_supply_root" name="Custom Supply" sequence="10" groups="base.group_user"/>
+    <menuitem id="menu_branches" name="Branches" parent="menu_custom_supply_root" action="custom_supply.action_branches" sequence="20" groups="custom_supply.group_supply_manager"/>
+    <menuitem id="menu_branch_products" name="Branch Products" parent="menu_custom_supply_root" action="custom_supply.action_branch_products" sequence="30" groups="custom_supply.group_supply_manager"/>
+    <menuitem id="menu_product_supply_units" name="Product Supply Units" parent="menu_custom_supply_root" action="custom_supply.action_product_supply_units" sequence="35" groups="custom_supply.group_supply_manager"/>
+    <menuitem id="menu_order_tracking" name="Order Tracking" parent="menu_custom_supply_root" action="custom_supply.action_order_tracking" sequence="40" groups="custom_supply.group_branch_employee,custom_supply.group_supply_manager,custom_supply.group_warehouse_employee,custom_supply.group_high_manager"/>
+    <menuitem id="menu_supply_requests_branch" name="Supply Requests" parent="menu_custom_supply_root" action="custom_supply.action_supply_requests_branch" sequence="50" groups="custom_supply.group_branch_employee"/>
+    <menuitem id="menu_supply_requests_supply" name="Supply Requests" parent="menu_custom_supply_root" action="custom_supply.action_supply_requests_supply_manager" sequence="53" groups="custom_supply.group_supply_manager"/>
+    <menuitem id="menu_supply_requests_warehouse" name="Supply Requests" parent="menu_custom_supply_root" action="custom_supply.action_supply_requests_warehouse" sequence="56" groups="custom_supply.group_warehouse_employee"/>
+    <menuitem id="menu_high_manager_reports" name="Reports" parent="menu_custom_supply_root" sequence="60" groups="custom_supply.group_high_manager"/>
 </odoo>

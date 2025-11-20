@@ -10,9 +10,12 @@
             <!-- إضافة الحقول الجديدة في صفحة معلومات المنتج -->
             <xpath expr="//sheet//group" position="inside">
                 <group string="Supply Info">
+                    <!-- 🔹 Checkbox الجديد -->
+                    <field name="product_for_supply"/>
+
                     <field name="custom_supply_field_1"/>
                     <field name="custom_supply_field_2"/>
-                    <field name="supply_unit_id"/> <!-- 🔹 الحقل الجديد -->
+                    <field name="supply_unit_id"/>
                 </group>
             </xpath>
 

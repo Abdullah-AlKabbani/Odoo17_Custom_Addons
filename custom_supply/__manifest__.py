@@ -16,10 +16,10 @@
         'web',
     ],
     'data': [
+        'data/ir_cron_data.xml',
         'data/sequence_data.xml',
         'security/custom_supply_groups.xml',
         'security/ir.model.access.csv',
-        'views/menus_root.xml',
         'views/branch_view.xml',
         'views/branch_product_views.xml',
         'views/supply_request_views.xml',
@@ -29,12 +29,19 @@
         'views/product_supply_view.xml',
         'views/branch_actions.xml',
         'views/menus.xml',
+        'report/supply_vs_suggestion_report_views.xml',
+        'report/high_manager_report_views.xml',
+        'report/supply_vs_export_report_views.xml',
+        'report/branch_product_supply_report_views.xml',
+        'report/branch_supply_pivot_report_views.xml',
         'report/supply_request_report.xml',
         'report/supply_request_report_template.xml',
     ],
     'assets': {
         'web.assets_backend': [
             'custom_supply/static/src/css/kanban_colors.css',
+            'custom_supply/static/src/js/branch_product_filter.js',
+            'custom_supply/static/src/js/pivot_default_collapse.js'
         ],
     },
     'images': ['static/description/supply_management.png'],

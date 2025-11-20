@@ -7,6 +7,7 @@ class Branch(models.Model):
     _name = "custom_supply.branch"
     _description = "Branch"
 
+
     name = fields.Char(string="Branch Name", required=True)
     location = fields.Char(string="Location")
 
@@ -30,6 +31,27 @@ class Branch(models.Model):
         string="Products in Branch"
     )
 
+    search_product = fields.Char(
+        string="Search Product",
+        help="Filter products by name or category",
+        store=False,
+    )
+
+    # ==============================
+    # Search Filed
+    # ==============================
+    def clear_search(self):
+        """
+        مسح حقل البحث ثم إعادة تحميل واجهة المستخدم لكي يُعاد تطبيق domain على one2many.
+        يتم استدعاء هذا الميثود من زر type="object" في الـ XML.
+        """
+        for rec in self:
+            rec.search_product = False
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'reload'
+        }
+
     # ==============================
     # COMPUTE FIELDS
     # ==============================
@@ -38,6 +60,7 @@ class Branch(models.Model):
         for branch in self:
             dates = branch.product_ids.mapped('write_date')
             branch.last_updated = max(dates) if dates else False
+
 
     # ==============================
     # CREATE OVERRIDE
@@ -58,7 +81,9 @@ class Branch(models.Model):
             branch.user_id.sudo().branch_id = branch
 
         # إنشاء منتجات الفرع
-        products = self.env['product.product'].search([])
+        products = self.env['product.product'].search([
+            ('product_tmpl_id.product_for_supply', '=', True)
+        ])
         branch_product_model = self.env['custom_supply.branch_product'].sudo()
         existing_pids = branch_product_model.search([('branch_id', '=', branch.id)]).mapped('product_id').ids
 
@@ -104,7 +129,9 @@ class Branch(models.Model):
     def _onchange_name_create_products(self):
         """عند تعبئة الاسم في سجل جديد، نملأ الجدول بالمنتجات افتراضيًا قبل الحفظ"""
         if not self._origin.id and self.name:  # سجل جديد فقط
-            products = self.env['product.product'].search([])
+            products = self.env['product.product'].search([
+                ('product_tmpl_id.product_for_supply', '=', True)
+            ])
             self.product_ids = [(5, 0, 0)]  # مسح أي سجلات افتراضية
             for product in products:
                 self.product_ids += self.env['custom_supply.branch_product'].new({

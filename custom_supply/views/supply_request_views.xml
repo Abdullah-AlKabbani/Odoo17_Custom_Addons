@@ -4,53 +4,7 @@
          Tree Views منفصلة لكل دور
          ========================== -->
 
-    <!-- Branch Employee Tree -->
-    <record id="view_supply_request_tree_branch" model="ir.ui.view">
-        <field name="name">custom_supply.supply_request.tree.branch</field>
-        <field name="model">custom_supply.supply_request</field>
-        <field name="priority" eval="10"/>
-        <field name="groups_id" eval="[(4, ref('custom_supply.group_branch_employee'))]"/>
-        <field name="arch" type="xml">
-            <tree string="Supply Requests - Branch">
-                <field name="name"/>
-                <field name="branch_id"/>
-                <field name="request_date"/>
-                <field name="status"/>
-            </tree>
-        </field>
-    </record>
-
-    <!-- Supply Manager Tree -->
-    <record id="view_supply_request_tree_supply_manager" model="ir.ui.view">
-        <field name="name">custom_supply.supply_request.tree.supply_manager</field>
-        <field name="model">custom_supply.supply_request</field>
-        <field name="priority" eval="20"/>
-        <field name="groups_id" eval="[(4, ref('custom_supply.group_supply_manager'))]"/>
-        <field name="arch" type="xml">
-            <tree string="Supply Requests - Supply Manager">
-                <field name="name"/>
-                <field name="branch_id"/>
-                <field name="request_date"/>
-                <field name="status"/>
-            </tree>
-        </field>
-    </record>
-
-    <!-- Warehouse Employee Tree -->
-    <record id="view_supply_request_tree_warehouse" model="ir.ui.view">
-        <field name="name">custom_supply.supply_request.tree.warehouse</field>
-        <field name="model">custom_supply.supply_request</field>
-        <field name="priority" eval="30"/>
-        <field name="groups_id" eval="[(4, ref('custom_supply.group_warehouse_employee'))]"/>
-        <field name="arch" type="xml">
-            <tree string="Supply Requests - Warehouse">
-                <field name="name"/>
-                <field name="branch_id"/>
-                <field name="request_date"/>
-                <field name="status"/>
-            </tree>
-        </field>
-    </record>
+    view_supply_request_tree_supply_manager
 
     <!-- ==========================
          Kanban Views منفصلة لكل دور
@@ -240,21 +194,18 @@
         <field name="name">Supply Requests (Branch)</field>
         <field name="res_model">custom_supply.supply_request</field>
         <field name="view_mode">kanban,tree,form</field>
-        <!-- domain ثابت في XML -->
         <field name="domain">[('status','=','InBranch')]</field>
-        <!-- أرسل uid في context -->
         <field name="context">{'tab':'supply_request', 'uid': uid}</field>
         <field name="groups_id" eval="[(4, ref('custom_supply.group_branch_employee'))]"/>
     </record>
-
-
 
     <record id="action_supply_requests_supply_manager" model="ir.actions.act_window">
         <field name="name">Supply Requests (Supply Manager)</field>
         <field name="res_model">custom_supply.supply_request</field>
         <field name="view_mode">kanban,tree,form</field>
         <field name="domain">[('status','=','Supply')]</field>
-        <field name="context">{'tab':'supply_request'}</field>
+        <!-- 🔹 هنا نضيف هذا -->
+        <field name="context">{'tab':'supply_request', 'create': False}</field>
         <field name="groups_id" eval="[(4, ref('custom_supply.group_supply_manager'))]"/>
     </record>
 
@@ -263,7 +214,9 @@
         <field name="res_model">custom_supply.supply_request</field>
         <field name="view_mode">kanban,tree,form</field>
         <field name="domain">[('status','=','InWarehouse')]</field>
-        <field name="context">{'tab':'supply_request'}</field>
+        <!-- 🔹 وهنا أيضًا -->
+        <field name="context">{'tab':'supply_request', 'create': False}</field>
         <field name="groups_id" eval="[(4, ref('custom_supply.group_warehouse_employee'))]"/>
     </record>
+
 </odoo>

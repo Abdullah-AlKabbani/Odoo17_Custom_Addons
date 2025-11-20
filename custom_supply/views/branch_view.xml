@@ -80,10 +80,4 @@
             (4, ref('custom_supply.group_high_manager'))
         ]"/>
     </record>
-
-    <menuitem id="menu_branches"
-              name="Branches"
-              parent="menu_custom_supply_root"
-              action="action_branches"
-              groups="custom_supply.group_supply_manager,custom_supply.group_high_manager"/>
 </odoo>

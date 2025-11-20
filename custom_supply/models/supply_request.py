@@ -12,29 +12,12 @@ class SupplyRequest(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = "id desc"
 
-
-
     # ============================
     # Fields
     # ============================
-    name = fields.Char(
-        string="Request Number",
-        required=True,
-        copy=False,
-        readonly=True,
-        default='New'
-    )
-    request_date = fields.Datetime(
-        string="Request Date",
-        readonly=True,
-        default=fields.Datetime.now
-    )
-    branch_id = fields.Many2one(
-        'custom_supply.branch',
-        string="Branch",
-        required=True,
-        default=lambda self: self._default_branch()
-    )
+    name = fields.Char(string="Request Number", required=True, copy=False, readonly=True, default='New')
+    request_date = fields.Datetime( string="Request Date", readonly=True, default=fields.Datetime.now)
+    branch_id = fields.Many2one('custom_supply.branch',string="Branch",required=True,default=lambda self: self._default_branch())
 
     status = fields.Selection([
         ('InBranch', 'In Branch'),
@@ -43,15 +26,9 @@ class SupplyRequest(models.Model):
         ('Done', 'Done')
     ], string="Status", default='InBranch', tracking=True)
 
-    line_ids = fields.One2many(
-        'custom_supply.supply_request_line',
-        'request_id',
-        string="Request Lines"
-    )
-
+    line_ids = fields.One2many('custom_supply.supply_request_line','request_id',string="Request Lines")
     supply_manager_id = fields.Many2one('res.users', string="Supply Manager", readonly=True)
     warehouse_user_id = fields.Many2one('res.users', string="Warehouse User", readonly=True)
-
     supply_confirm_date = fields.Datetime("Supply Confirmed On", readonly=True)
     warehouse_export_date = fields.Datetime("Exported On", readonly=True)
 
@@ -306,6 +283,7 @@ class SupplyRequest(models.Model):
             else:
                 return [('id', '=', 0)]
 
+        _logger.info("_domain_for_tab called: user=%s, tab=%s", user.name, tab)
         # fallback: deny if role not matched
         return [('id', '=', 0)]
 
@@ -313,21 +291,61 @@ class SupplyRequest(models.Model):
     # Override search
     # ============================
     @api.model
-    def search(self, args, offset=0, limit=None, order=None, **kwargs):
-        """
-        Search records with tab domain applied if 'tab' exists in context.
-        This avoids recursion by not overriding read().
-        """
+    def search(self, args, offset=0, limit=None, order=None):
+        """تطبيق فلتر فرع المستخدم الفرعي بشكل تلقائي في تبويبة Order Tracking"""
+        context = self._context or {}
         user = self.env.user
-        tab = self.env.context.get('tab', None)
 
-        if tab:
-            tab_domain = self._domain_for_tab(tab.lower(), user)
-            if tab_domain:
-                args = list(tab_domain) + list(args)
+        if context.get('from_order_tracking') and user.has_group('custom_supply.group_branch_employee'):
+            # اضف فلتر على branch_id ليكون فقط فرع المستخدم
+            args = args + [('branch_id', '=', user.branch_id.id)]
 
-        # تمرير أي kwargs إضافية للأصلية لتجنب TypeError
-        return super(SupplyRequest, self).search(args, offset=offset, limit=limit, order=order, **kwargs)
+        return super(SupplyRequest, self).search(args, offset=offset, limit=limit, order=order)
+
+    @api.model
+    def read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True):
+        """ضمان ان read_group (Kanban grouped) يحترم فلتر فرع المستخدم الفرعي"""
+        context = self._context or {}
+        user = self.env.user
+
+        if context.get('from_order_tracking') and user.has_group('custom_supply.group_branch_employee'):
+            domain = domain + [('branch_id', '=', user.branch_id.id)]
+        return super(SupplyRequest, self).read_group(domain, fields, groupby, offset=offset, limit=limit, orderby=orderby, lazy=lazy)
+
+    @api.model
+    def fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu=False):
+        res = super().fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu)
+
+        context = self.env.context
+        user = self.env.user
+
+        # نطبق الفلتر فقط على Order Tracking عند موظف فرع
+        if context.get("from_order_tracking") and user.has_group("custom_supply.group_branch_employee"):
+
+            branch_id = user.branch_id.id if user.branch_id else False
+
+            if branch_id:
+                # تعديل الـ arch نفسه لضمان التطبيق على كل الـ RPC
+                from lxml import etree
+                doc = etree.XML(res['arch'])
+
+                # فرض domain على view مباشرة
+                existing_domain = doc.get("domain")
+
+                forced_domain = "[('branch_id','=',%d)]" % branch_id
+
+                if existing_domain:
+                    # دمج الدومين القديم مع الجديد
+                    final_domain = "[('branch_id','=',%d)]" % branch_id
+                else:
+                    final_domain = forced_domain
+
+                doc.set("domain", final_domain)
+
+                # إعادة حفظ الـ arch
+                res['arch'] = etree.tostring(doc, encoding='unicode')
+
+        return res
 
     def write(self, vals):
         # السماح فقط بالكتابة على حقول Chatter أثناء التصفّح من Order Tracking

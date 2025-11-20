@@ -107,5 +107,10 @@
             <field name="groups" eval="[(4, ref('custom_supply.group_warehouse_employee'))]"/>
         </record>
 
+        <record id="model_custom_supply_high_manager_report_avg_duration" model="ir.model">
+            <field name="name">High Manager - Average Durations</field>
+            <field name="model">custom_supply.high_manager_report_avg_duration</field>
+            <field name="state">manual</field>
+        </record>
     </data>
 </odoo>

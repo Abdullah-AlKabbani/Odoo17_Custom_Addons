@@ -52,10 +52,4 @@
             (4, ref('custom_supply.group_high_manager'))
         ]"/>
     </record>
-
-    <menuitem id="menu_branch_products"
-              name="Branch Products"
-              parent="menu_custom_supply_root"
-              action="action_branch_products"
-              groups="custom_supply.group_supply_manager,custom_supply.group_high_manager"/>
 </odoo>
